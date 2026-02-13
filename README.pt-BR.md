@@ -186,14 +186,14 @@ cx memory rules                                           # Gerar regras dos pad
 O Cortex orquestra workflows multi-agente para tarefas de código. Cada tarefa passa por três fases:
 
 ```
-┌──────────┐     ┌───────────┐     ┌──────────┐
-│ Pesquisa │ ──▶ │ Implement │ ──▶ │ Verificar│ ──▶ done
-└──────────┘     └───────────┘     └──────────┘
-     │                │                 │
-     ▼                ▼                 ▼
-  Entender         Escrever          Rodar testes
-  codebase         código            lint, review
-  + planejar       seguindo          + relatório
+┌──────────┐     ┌───────────┐     ┌───────────┐
+│ Pesquisa │ ──▶ │ Implement │ ──▶ │ Verificar │ ──▶ done
+└──────────┘     └───────────┘     └───────────┘
+      │                │                 │
+      ▼                ▼                 ▼
+  Entender         Escrever         Rodar testes
+  codebase         código           lint, review
+  + planejar       seguindo         + relatório
                    o plano
 ```
 
@@ -255,9 +255,9 @@ claude mcp add cortex -- cx mcp serve
 O Cortex aprende com seu trabalho e melhora ao longo do tempo:
 
 ```
-Tarefa concluída → Verificação → Extração de padrões → Salvo como aprendizado
-                                                              ↓
-Próxima tarefa similar ← Agentes aplicam padrões ← Recuperado por relevância
+Tarefa concluída → Verificação → Extração de padrões → Salvo como learning
+                                                                ↓
+Próxima tarefa similar ← Agentes aplicam padrões ←── Recuperado por relevância
 ```
 
 Tipos: `success_pattern` · `failure_pattern` · `domain_knowledge` · `user_feedback`

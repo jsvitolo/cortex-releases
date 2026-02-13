@@ -255,8 +255,8 @@ Cortex learns from your work and improves over time:
 
 ```
 Task completed → Verification → Pattern extraction → Stored as learning
-                                                           ↓
-Next similar task ← Agents apply learned patterns ← Retrieved by relevance
+                                                              ↓
+Next similar task ← Agents apply learned patterns ←── Retrieved by relevance
 ```
 
 Types: `success_pattern` · `failure_pattern` · `domain_knowledge` · `user_feedback`

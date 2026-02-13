@@ -31,30 +31,30 @@ That's it. Claude Code now has access to all 102 Cortex tools.
 Cortex provides a structured workflow that adapts to the complexity of your task:
 
 ```
-┌──────────────────────────────────────────────────────────┐
-│                   Is the solution clear?                  │
-└───────────────────────┬──────────────────────────────────┘
-                   Yes  │  No
-                   ┌────┘  └────┐
-                   ▼            ▼
-            ┌───────────┐  ┌──────────────┐
-            │ Is it     │  │ /brainstorm  │
-            │ complex?  │  │ Explore ideas│
-            └─────┬─────┘  └──────┬───────┘
-             No   │   Yes         │
-             ┌────┘   └────┐      ▼
-             ▼             ▼   Decide approach
-      ┌───────────┐  ┌─────────┐  │
-      │ Just do it│  │ /plan   │  ▼
-      │ cx add +  │  │ Design  │ /plan or
-      │ implement │  │ first   │ brainstorm_to_plan
-      └───────────┘  └────┬────┘  │
-                          │       │
-                          ▼       ▼
-                    ┌──────────────────┐
-                    │ /implement CX-N  │
-                    │ 3-agent workflow  │
-                    └──────────────────┘
+              ┌───────────────────────────┐
+              │  Is the solution clear?   │
+              └─────────────┬─────────────┘
+                      Yes   │   No
+                      ┌─────┘   └─────┐
+                      ▼               ▼
+              ┌──────────────┐  ┌───────────────┐
+              │  Is it       │  │  /brainstorm  │
+              │  complex?    │  │  Explore ideas│
+              └───────┬──────┘  └───────┬───────┘
+               No     │    Yes          │
+               ┌──────┘    └──────┐     ▼
+               ▼                  ▼   Decide
+        ┌────────────┐    ┌──────────┐  │
+        │ Just do it │    │  /plan   │  ▼
+        │ cx add +   │    │  Design  │ /plan or
+        │ implement  │    │  first   │ brainstorm_to_plan
+        └────────────┘    └─────┬────┘  │
+                                │       │
+                                ▼       ▼
+                        ┌──────────────────┐
+                        │ /implement CX-N  │
+                        │ 3-agent workflow  │
+                        └──────────────────┘
 ```
 
 ---
@@ -231,12 +231,12 @@ You: "Merge it"          →  /merge (squash merge + task → done)
 The entire git lifecycle is automated and tied to tasks:
 
 ```
-┌─────────┐   cx start    ┌──────────┐   /pr      ┌────────┐   /merge   ┌──────┐
-│ Backlog │ ────────────▶  │ Progress │ ────────▶  │ Review │ ────────▶ │ Done │
-└─────────┘                └──────────┘            └────────┘           └──────┘
-                           Creates branch          Pushes code          Squash merges
-                           + worktree              Creates PR           Deletes branch
-                                                                        Cleans up
+┌─────────┐  cx start  ┌──────────┐   /pr    ┌────────┐  /merge  ┌──────┐
+│ Backlog │ ─────────▶ │ Progress │ ───────▶ │ Review │ ──────▶ │ Done │
+└─────────┘            └──────────┘          └────────┘         └──────┘
+                        Creates branch       Pushes code        Squash merges
+                        + worktree           Creates PR         Deletes branch
+                                                                Cleans up
 ```
 
 ### Working on Multiple Tasks
