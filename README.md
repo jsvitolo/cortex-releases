@@ -245,7 +245,9 @@ claude mcp add cortex -- cx mcp serve
 | Verification & Learnings | `verify_task`, `learnings_relevant` | 5 |
 | And more... | Phases, DoD, Controller, Thinking tools | 31 |
 
-> **[View full MCP documentation →](docs/mcp.md)**
+> **[View full MCP documentation (102 tools) →](docs/mcp.md)**
+>
+> **[Getting started with Claude Code + Cortex →](docs/claude-code.md)**
 
 ### Learnings System
 
