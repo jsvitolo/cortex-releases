@@ -31,7 +31,7 @@ Cortex (`cx`) is a terminal-first development platform that brings together ever
 - **Agent Orchestration** — Multi-agent workflows (research → implement → verify) powered by Claude Code
 - **Git Automation** — Branches, PRs, and merges tied to tasks — zero context switching
 - **TUI Dashboard** — Beautiful terminal UI with Kanban, memory browser, agent monitor, and more
-- **MCP Integration** — 40+ tools for Claude Code, making AI-assisted development seamless
+- **MCP Integration** — [102 tools](docs/mcp.md) for Claude Code, making AI-assisted development seamless
 
 ## Quick Start
 
@@ -224,24 +224,28 @@ cx merge CX-1       # Squash merge + delete branch + move task to "done"
 
 ### Claude Code Integration (MCP)
 
-Cortex exposes 40+ tools via MCP (Model Context Protocol) for deep integration with Claude Code:
+Cortex exposes **102 tools** via [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) for deep integration with Claude Code:
 
 ```bash
 # Register Cortex as an MCP server
 claude mcp add cortex -- cx mcp serve
 ```
 
-**Available tool categories:**
-| Category | Tools |
-|----------|-------|
-| Tasks | `task_create`, `task_list`, `task_get`, `task_update` |
-| Memory | `memory_save`, `memory_list`, `memory_link` |
-| Git | `git_branch`, `git_pr`, `git_merge` |
-| Agents | `agent_spawn`, `task_orchestrate`, `agent_report` |
-| LSP | `lsp_symbols`, `lsp_definition`, `lsp_references`, `lsp_hover` |
-| Database | `db_query`, `db_schema`, `db_sample`, `db_stats` |
-| Planning | `plan_create`, `brainstorm_create`, `business_rule_extract` |
-| Reflection | `think_about_task_adherence`, `think_about_collected_information` |
+| Category | Examples | Count |
+|----------|----------|-------|
+| Task Management | `task_create`, `task_list`, `task_update` | 4 |
+| Memory | `memory_save`, `memory_list`, `memory_link` | 3 |
+| Git Automation | `git_branch`, `git_pr`, `git_merge` | 3 |
+| Agent Orchestration | `agent_spawn`, `task_orchestrate`, `agent_report` | 9 |
+| LSP Code Intelligence | `lsp_symbols`, `lsp_definition`, `lsp_references` | 12 |
+| Planning & Brainstorm | `plan_create`, `brainstorm_create`, `brainstorm_to_plan` | 14 |
+| Business Rules | `business_rule_extract`, `rules_extract` | 8 |
+| Database (PostgreSQL) | `db_query`, `db_schema`, `db_sample` | 5 |
+| Epics & Workflows | `epic_orchestrate`, `workflow_status` | 8 |
+| Verification & Learnings | `verify_task`, `learnings_relevant` | 5 |
+| And more... | Phases, DoD, Controller, Thinking tools | 31 |
+
+> **[View full MCP documentation →](docs/mcp.md)**
 
 ### Learnings System
 

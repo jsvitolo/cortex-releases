@@ -31,7 +31,7 @@ Cortex (`cx`) é uma plataforma de desenvolvimento terminal-first que reúne tud
 - **Orquestração de Agentes** — Workflows multi-agente (pesquisa → implementação → verificação) com Claude Code
 - **Automação Git** — Branches, PRs e merges vinculados a tarefas — zero troca de contexto
 - **Dashboard TUI** — Interface de terminal bonita com Kanban, browser de memória, monitor de agentes e mais
-- **Integração MCP** — 40+ ferramentas para Claude Code, tornando o desenvolvimento assistido por IA fluido
+- **Integração MCP** — [102 ferramentas](docs/mcp.md) para Claude Code, tornando o desenvolvimento assistido por IA fluido
 
 ## Início Rápido
 
@@ -225,24 +225,28 @@ cx merge CX-1       # Squash merge + deleta branch + move tarefa para "done"
 
 ### Integração com Claude Code (MCP)
 
-O Cortex expõe 40+ ferramentas via MCP (Model Context Protocol) para integração profunda com o Claude Code:
+O Cortex expõe **102 ferramentas** via [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) para integração profunda com o Claude Code:
 
 ```bash
 # Registrar Cortex como servidor MCP
 claude mcp add cortex -- cx mcp serve
 ```
 
-**Categorias de ferramentas:**
-| Categoria | Ferramentas |
-|-----------|-------------|
-| Tarefas | `task_create`, `task_list`, `task_get`, `task_update` |
-| Memória | `memory_save`, `memory_list`, `memory_link` |
-| Git | `git_branch`, `git_pr`, `git_merge` |
-| Agentes | `agent_spawn`, `task_orchestrate`, `agent_report` |
-| LSP | `lsp_symbols`, `lsp_definition`, `lsp_references`, `lsp_hover` |
-| Banco de Dados | `db_query`, `db_schema`, `db_sample`, `db_stats` |
-| Planejamento | `plan_create`, `brainstorm_create`, `business_rule_extract` |
-| Reflexão | `think_about_task_adherence`, `think_about_collected_information` |
+| Categoria | Exemplos | Qtd |
+|-----------|----------|-----|
+| Gerenciamento de Tarefas | `task_create`, `task_list`, `task_update` | 4 |
+| Memória | `memory_save`, `memory_list`, `memory_link` | 3 |
+| Automação Git | `git_branch`, `git_pr`, `git_merge` | 3 |
+| Orquestração de Agentes | `agent_spawn`, `task_orchestrate`, `agent_report` | 9 |
+| LSP Inteligência de Código | `lsp_symbols`, `lsp_definition`, `lsp_references` | 12 |
+| Planejamento & Brainstorm | `plan_create`, `brainstorm_create`, `brainstorm_to_plan` | 14 |
+| Regras de Negócio | `business_rule_extract`, `rules_extract` | 8 |
+| Banco de Dados (PostgreSQL) | `db_query`, `db_schema`, `db_sample` | 5 |
+| Epics & Workflows | `epic_orchestrate`, `workflow_status` | 8 |
+| Verificação & Learnings | `verify_task`, `learnings_relevant` | 5 |
+| E mais... | Fases, DoD, Controller, Thinking tools | 31 |
+
+> **[Ver documentação completa do MCP →](docs/mcp.md)**
 
 ### Sistema de Aprendizado
 
