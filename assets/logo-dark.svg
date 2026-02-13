@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" fill="none">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A78BFA;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#818CF8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#60A5FA;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#A78BFA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#60A5FA;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C4B5FD;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A5B4FC;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Neural network icon -->
+  <g transform="translate(30, 20)" filter="url(#glow)">
+    <line x1="30" y1="40" x2="75" y2="30" stroke="url(#grad2)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="30" y1="40" x2="75" y2="80" stroke="url(#grad2)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="30" y1="40" x2="75" y2="130" stroke="url(#grad2)" stroke-width="1.5" opacity="0.25"/>
+    <line x1="30" y1="80" x2="75" y2="30" stroke="url(#grad2)" stroke-width="1.5" opacity="0.35"/>
+    <line x1="30" y1="80" x2="75" y2="80" stroke="url(#grad2)" stroke-width="1.5" opacity="0.6"/>
+    <line x1="30" y1="80" x2="75" y2="130" stroke="url(#grad2)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="30" y1="120" x2="75" y2="30" stroke="url(#grad2)" stroke-width="1.5" opacity="0.25"/>
+    <line x1="30" y1="120" x2="75" y2="80" stroke="url(#grad2)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="30" y1="120" x2="75" y2="130" stroke="url(#grad2)" stroke-width="1.5" opacity="0.6"/>
+
+    <line x1="75" y1="30" x2="120" y2="55" stroke="url(#grad2)" stroke-width="1.5" opacity="0.6"/>
+    <line x1="75" y1="30" x2="120" y2="105" stroke="url(#grad2)" stroke-width="1.5" opacity="0.35"/>
+    <line x1="75" y1="80" x2="120" y2="55" stroke="url(#grad2)" stroke-width="2" opacity="0.7"/>
+    <line x1="75" y1="80" x2="120" y2="105" stroke="url(#grad2)" stroke-width="2" opacity="0.7"/>
+    <line x1="75" y1="130" x2="120" y2="55" stroke="url(#grad2)" stroke-width="1.5" opacity="0.35"/>
+    <line x1="75" y1="130" x2="120" y2="105" stroke="url(#grad2)" stroke-width="1.5" opacity="0.6"/>
+
+    <circle cx="30" cy="40" r="6" fill="url(#nodeGrad)" opacity="0.9"/>
+    <circle cx="30" cy="80" r="7" fill="url(#nodeGrad)" opacity="1"/>
+    <circle cx="30" cy="120" r="6" fill="url(#nodeGrad)" opacity="0.9"/>
+
+    <circle cx="75" cy="30" r="5" fill="url(#grad1)" opacity="0.85"/>
+    <circle cx="75" cy="80" r="8" fill="url(#grad1)" opacity="1"/>
+    <circle cx="75" cy="130" r="5" fill="url(#grad1)" opacity="0.85"/>
+
+    <circle cx="120" cy="55" r="7" fill="url(#nodeGrad)" opacity="0.95"/>
+    <circle cx="120" cy="105" r="7" fill="url(#nodeGrad)" opacity="0.95"/>
+
+    <circle cx="75" cy="80" r="12" fill="none" stroke="#A78BFA" stroke-width="1" opacity="0.35"/>
+    <circle cx="75" cy="80" r="18" fill="none" stroke="#A78BFA" stroke-width="0.5" opacity="0.2"/>
+  </g>
+
+  <!-- Text: CORTEX -->
+  <text x="195" y="115" font-family="SF Mono, Fira Code, JetBrains Mono, Consolas, monospace" font-size="72" font-weight="700" fill="url(#grad1)" letter-spacing="6">
+    CORTEX
+  </text>
+
+  <!-- Subtitle -->
+  <text x="198" y="145" font-family="SF Mono, Fira Code, JetBrains Mono, Consolas, monospace" font-size="14" fill="#CBD5E1" letter-spacing="4">
+    AI-POWERED DEV COCKPIT
+  </text>
+
+  <!-- Terminal cursor blink -->
+  <rect x="538" y="88" width="3" height="30" fill="#A78BFA" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;0;0.9" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+</svg>

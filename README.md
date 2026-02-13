@@ -1,5 +1,10 @@
 <p align="center">
-  <h1 align="center">Cortex</h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/logo.svg">
+    <img alt="Cortex" src="assets/logo.svg" width="500">
+  </picture>
+  <br />
   <p align="center">
     <strong>Your AI-powered development cockpit.</strong>
     <br />
@@ -62,10 +67,62 @@ cx add "Setup authentication" --type feature
 cx ui
 ```
 
-### Requirements
+### Dependencies
 
-- **OpenAI API Key** (for semantic memory embeddings): `export OPENAI_API_KEY=sk-...`
-- **Claude Code** (optional, for agent orchestration): [Install Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+Cortex requires a few tools to unlock its full potential:
+
+**macOS:**
+
+```bash
+# Required: Git (usually pre-installed)
+xcode-select --install
+
+# Required: OpenAI API key (for semantic memory)
+export OPENAI_API_KEY=sk-...       # Add to your ~/.zshrc or ~/.bashrc
+
+# Optional: Claude Code (for agent orchestration)
+npm install -g @anthropic-ai/claude-code
+
+# Optional: GitHub CLI (for PR/merge automation)
+brew install gh
+gh auth login
+```
+
+**Linux (Debian/Ubuntu):**
+
+```bash
+# Required: Git
+sudo apt-get install -y git
+
+# Required: OpenAI API key (for semantic memory)
+export OPENAI_API_KEY=sk-...       # Add to your ~/.bashrc
+
+# Optional: Claude Code (for agent orchestration)
+npm install -g @anthropic-ai/claude-code
+
+# Optional: GitHub CLI (for PR/merge automation)
+sudo apt-get install -y gh
+gh auth login
+```
+
+**Linux (Fedora/RHEL):**
+
+```bash
+# Required: Git
+sudo dnf install -y git
+
+# Required: OpenAI API key (for semantic memory)
+export OPENAI_API_KEY=sk-...       # Add to your ~/.bashrc
+
+# Optional: Claude Code (for agent orchestration)
+npm install -g @anthropic-ai/claude-code
+
+# Optional: GitHub CLI (for PR/merge automation)
+sudo dnf install -y gh
+gh auth login
+```
+
+> **Note:** Without the OpenAI API key, Cortex works fully for task management, git automation, and TUI — only semantic memory search requires embeddings.
 
 ## Features
 

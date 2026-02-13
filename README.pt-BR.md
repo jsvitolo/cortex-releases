@@ -1,5 +1,10 @@
 <p align="center">
-  <h1 align="center">Cortex</h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/logo.svg">
+    <img alt="Cortex" src="assets/logo.svg" width="500">
+  </picture>
+  <br />
   <p align="center">
     <strong>Seu cockpit de desenvolvimento com IA.</strong>
     <br />
@@ -62,10 +67,62 @@ cx add "Configurar autenticação" --type feature
 cx ui
 ```
 
-### Requisitos
+### Dependências
 
-- **OpenAI API Key** (para embeddings de memória semântica): `export OPENAI_API_KEY=sk-...`
-- **Claude Code** (opcional, para orquestração de agentes): [Instalar Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+O Cortex precisa de algumas ferramentas para funcionar por completo:
+
+**macOS:**
+
+```bash
+# Obrigatório: Git (geralmente já instalado)
+xcode-select --install
+
+# Obrigatório: Chave da OpenAI (para memória semântica)
+export OPENAI_API_KEY=sk-...       # Adicione ao ~/.zshrc ou ~/.bashrc
+
+# Opcional: Claude Code (para orquestração de agentes)
+npm install -g @anthropic-ai/claude-code
+
+# Opcional: GitHub CLI (para automação de PR/merge)
+brew install gh
+gh auth login
+```
+
+**Linux (Debian/Ubuntu):**
+
+```bash
+# Obrigatório: Git
+sudo apt-get install -y git
+
+# Obrigatório: Chave da OpenAI (para memória semântica)
+export OPENAI_API_KEY=sk-...       # Adicione ao ~/.bashrc
+
+# Opcional: Claude Code (para orquestração de agentes)
+npm install -g @anthropic-ai/claude-code
+
+# Opcional: GitHub CLI (para automação de PR/merge)
+sudo apt-get install -y gh
+gh auth login
+```
+
+**Linux (Fedora/RHEL):**
+
+```bash
+# Obrigatório: Git
+sudo dnf install -y git
+
+# Obrigatório: Chave da OpenAI (para memória semântica)
+export OPENAI_API_KEY=sk-...       # Adicione ao ~/.bashrc
+
+# Opcional: Claude Code (para orquestração de agentes)
+npm install -g @anthropic-ai/claude-code
+
+# Opcional: GitHub CLI (para automação de PR/merge)
+sudo dnf install -y gh
+gh auth login
+```
+
+> **Nota:** Sem a chave da OpenAI, o Cortex funciona normalmente para gerenciamento de tarefas, automação git e TUI — apenas a busca semântica na memória requer embeddings.
 
 ## Funcionalidades
 
