@@ -231,7 +231,7 @@ You: "Merge it"          →  /merge (squash merge + task → done)
 The entire git lifecycle is automated and tied to tasks:
 
 ```
-┌─────────┐  cx start  ┌──────────┐   /pr    ┌────────┐  /merge  ┌──────┐
+┌─────────┐  cx start  ┌──────────┐   /pr    ┌────────┐  /merge ┌──────┐
 │ Backlog │ ─────────▶ │ Progress │ ───────▶ │ Review │ ──────▶ │ Done │
 └─────────┘            └──────────┘          └────────┘         └──────┘
                         Creates branch       Pushes code        Squash merges
