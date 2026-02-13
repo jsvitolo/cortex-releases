@@ -146,19 +146,19 @@ A beautiful, keyboard-driven interface built with [Bubble Tea](https://github.co
 ┌─ Cortex ──────────────────────────────────────────────────────────────┐
 │                                                                       │
 │  Backlog        In Progress     Review          Done                  │
-│  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐          │
-│  │ CX-3      │  │ CX-1      │  │ CX-4      │  │ CX-2      │          │
-│  │ Add API   │  │ Auth      │  │ Tests     │  │ Setup DB  │          │
-│  │ feature   │  │ feature   │  │ chore     │  │ chore     │          │
-│  └───────────┘  └───────────┘  └───────────┘  └───────────┘          │
-│  ┌───────────┐                                ┌───────────┐          │
-│  │ CX-5      │                                │ CX-6      │          │
-│  │ Dark mode │                                │ CI/CD     │          │
-│  │ feature   │                                │ chore     │          │
-│  └───────────┘                                └───────────┘          │
+│  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐           │
+│  │ CX-3      │  │ CX-1      │  │ CX-4      │  │ CX-2      │           │
+│  │ Add API   │  │ Auth      │  │ Tests     │  │ Setup DB  │           │
+│  │ feature   │  │ feature   │  │ chore     │  │ chore     │           │
+│  └───────────┘  └───────────┘  └───────────┘  └───────────┘           │
+│  ┌───────────┐                                ┌───────────┐           │
+│  │ CX-5      │                                │ CX-6      │           │
+│  │ Dark mode │                                │ CI/CD     │           │
+│  │ feature   │                                │ chore     │           │
+│  └───────────┘                                └───────────┘           │
 │                                                                       │
 ├───────────────────────────────────────────────────────────────────────┤
-│  a: add  e: edit  ↑↓: navigate  ←→: move  /: search  q: quit        │
+│  a: add  e: edit  ↑↓: navigate  ←→: move  /: search  q: quit          │
 └───────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -187,7 +187,7 @@ Cortex orchestrates multi-agent workflows for coding tasks. Each task goes throu
 
 ```
 ┌──────────┐     ┌───────────┐     ┌────────┐
-│ Research  │ ──▶ │ Implement │ ──▶ │ Verify │ ──▶ done
+│ Research │ ──▶ │ Implement │ ──▶ │ Verify │ ──▶ done
 └──────────┘     └───────────┘     └────────┘
      │                │                 │
      ▼                ▼                 ▼
@@ -200,7 +200,7 @@ Cortex orchestrates multi-agent workflows for coding tasks. Each task goes throu
 
 ```
 research-explore ──┐                              verify-test   ──┐
-research-memory  ──┼──▶ synth ──▶ implement ──▶   verify-lint  ──┼──▶ report
+research-memory  ──┼──▶ synth ──▶ implement ──▶   verify-lint  ───┼──▶ report
 research-impact  ──┘                              verify-review ──┘
 ```
 
