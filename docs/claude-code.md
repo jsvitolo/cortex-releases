@@ -53,7 +53,7 @@ Cortex provides a structured workflow that adapts to the complexity of your task
                                 ▼       ▼
                         ┌──────────────────┐
                         │ /implement CX-N  │
-                        │ 3-agent workflow  │
+                        │ 3-agent workflow │
                         └──────────────────┘
 ```
 
