@@ -128,7 +128,7 @@ gh auth login
 
 ### Task Management
 
-Track your work with a full-featured task system inspired by [beads](https://github.com/beads-project/beads).
+Track your work with a full-featured task system inspired by [beads](https://github.com/steveyegge/beads).
 
 ```bash
 cx add "Implement user auth" --type feature    # Create task → CX-1

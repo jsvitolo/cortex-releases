@@ -128,7 +128,7 @@ gh auth login
 
 ### Gerenciamento de Tarefas
 
-Acompanhe seu trabalho com um sistema completo de tarefas inspirado no [beads](https://github.com/beads-project/beads).
+Acompanhe seu trabalho com um sistema completo de tarefas inspirado no [beads](https://github.com/steveyegge/beads).
 
 ```bash
 cx add "Implementar auth" --type feature    # Criar tarefa → CX-1
