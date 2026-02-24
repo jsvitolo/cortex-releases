@@ -82,6 +82,15 @@ main() {
   tar xzf "${tmp_dir}/${archive_name}" -C "$tmp_dir"
 
   echo "Installing to ${INSTALL_DIR}/${BINARY}..."
+  if [ ! -d "$INSTALL_DIR" ]; then
+    echo "Creating ${INSTALL_DIR}..."
+    if [ -w "$(dirname "$INSTALL_DIR")" ]; then
+      mkdir -p "$INSTALL_DIR"
+    else
+      sudo mkdir -p "$INSTALL_DIR"
+    fi
+  fi
+
   if [ -w "$INSTALL_DIR" ]; then
     mv "${tmp_dir}/${BINARY}" "${INSTALL_DIR}/${BINARY}"
   else
