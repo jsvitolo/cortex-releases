@@ -6,9 +6,9 @@
   </picture>
   <br />
   <p align="center">
-    <strong>Your AI-powered development cockpit.</strong>
+    <strong>Your development brain — powered by Claude Code.</strong>
     <br />
-    Task management, semantic memory, agent orchestration, and git automation — all from your terminal.
+    Task management, semantic memory, agent workflows, and git automation — all from your terminal.
   </p>
   <p align="center">
     <a href="https://github.com/jsvitolo/cortex-releases/releases/latest"><img src="https://img.shields.io/github/v/release/jsvitolo/cortex-releases?style=flat-square&color=blue" alt="Latest Release"></a>
@@ -22,20 +22,27 @@
 
 ---
 
-## What is Cortex?
+## How It Works
 
-Cortex (`cx`) is a terminal-first development platform that brings together everything you need to stay in flow:
+Cortex is designed to work **alongside Claude Code**, not as a standalone CLI you type into.
 
-- **Task Management** — Kanban board, priorities, dependencies, and full lifecycle tracking
-- **Semantic Memory** — Remember decisions, patterns, and context across sessions using hybrid search (FTS5 + HNSW vectors)
-- **Agent Orchestration** — Multi-agent workflows (research → implement → verify) powered by Claude Code
-- **Git Automation** — Branches, PRs, and merges tied to tasks — zero context switching
-- **TUI Dashboard** — Beautiful terminal UI with Kanban, memory browser, agent monitor, and more
-- **MCP Integration** — [102 tools](docs/mcp.md) for Claude Code, making AI-assisted development seamless
+Once initialized, **Claude Code becomes your interface** — it uses Cortex's 65+ MCP tools to manage tasks, search memory, run agent workflows, and navigate code. You rarely need to type `cx` commands yourself.
 
-## Quick Start
+```
+You → Claude Code → Cortex MCP → Tasks, Memory, Agents, LSP
+                              ↓
+                           cx ui  (to visualize everything)
+```
 
-### Install
+**The only `cx` commands you'll use directly:**
+- `cx init` — set up Cortex in your project (once)
+- `cx ui` — open the visual dashboard (whenever you want to see what's going on)
+
+Everything else happens automatically through Claude Code.
+
+---
+
+## Install
 
 **macOS / Linux (Homebrew):**
 
@@ -54,93 +61,80 @@ curl -sSL https://raw.githubusercontent.com/jsvitolo/cortex-releases/main/instal
 
 Download the latest binary from the [Releases](https://github.com/jsvitolo/cortex-releases/releases/latest) page.
 
-### Setup
+---
+
+## Setup
+
+### 1. Set your OpenAI API key
+
+Cortex uses OpenAI embeddings for semantic memory search:
 
 ```bash
-# Initialize Cortex in your project
+export OPENAI_API_KEY=sk-...
+# Add to your ~/.zshrc or ~/.bashrc to persist
+```
+
+> Without the key, Cortex works fully for task management, git automation, and TUI — only semantic memory requires it.
+
+### 2. Initialize in your project
+
+```bash
+cd your-project
 cx init
+```
 
-# Create your first task
-cx add "Setup authentication" --type feature
+This sets up `.cortex/` (local data), registers the MCP server with Claude Code, and installs the Claude Code plugin (skills + hooks).
 
-# Open the TUI
+### 3. Install the Claude Code plugin
+
+The plugin adds workflow automation hooks and skill shortcuts (`/implement`, `/brainstorm`, `/merge`, `/pr`) to every Claude Code session in this project.
+
+```bash
+# Install from the Claude Code marketplace
+claude plugin install cortex
+
+# Or manually register the MCP server
+claude mcp add cortex -- cx mcp serve
+```
+
+> `cx init` already handles MCP registration. The plugin install adds the full skills and hooks experience on top.
+
+### 4. Open the dashboard
+
+```bash
 cx ui
 ```
 
-### Dependencies
+Now open Claude Code in your project and start working — Cortex tracks tasks and memories automatically.
 
-Cortex requires a few tools to unlock its full potential:
+---
 
-**macOS:**
+## What Claude Code Can Do With Cortex
 
-```bash
-# Required: Git (usually pre-installed)
-xcode-select --install
+Once set up, just talk to Claude Code naturally:
 
-# Required: OpenAI API key (for semantic memory)
-export OPENAI_API_KEY=sk-...       # Add to your ~/.zshrc or ~/.bashrc
+| You say... | Claude Code does... |
+|------------|---------------------|
+| "Let's implement the auth feature" | Creates a task, runs 3-agent workflow |
+| "I'm not sure how to approach this" | Starts a brainstorm session |
+| "What did we decide about the DB schema?" | Searches semantic memory |
+| "Open a PR for this" | Pushes, creates PR, moves task to review |
+| "Merge and release" | Squash merges, tags, triggers CI release |
 
-# Optional: Claude Code (for agent orchestration)
-npm install -g @anthropic-ai/claude-code
+### Skills (slash commands in Claude Code)
 
-# Optional: GitHub CLI (for PR/merge automation)
-brew install gh
-gh auth login
-```
+| Skill | What it does |
+|-------|--------------|
+| `/implement CX-N` | Runs the 3-agent workflow (research → implement → verify) |
+| `/brainstorm "idea"` | Starts an interactive brainstorm session |
+| `/plan "title"` | Creates or edits a high-level plan |
+| `/start CX-N` | Creates branch, enters worktree, moves task to progress |
+| `/pr` | Pushes branch, creates PR, moves task to review |
+| `/merge` | Squash merges PR, deletes branch, moves task to done |
 
-**Linux (Debian/Ubuntu):**
+---
 
-```bash
-# Required: Git
-sudo apt-get install -y git
-
-# Required: OpenAI API key (for semantic memory)
-export OPENAI_API_KEY=sk-...       # Add to your ~/.bashrc
-
-# Optional: Claude Code (for agent orchestration)
-npm install -g @anthropic-ai/claude-code
-
-# Optional: GitHub CLI (for PR/merge automation)
-sudo apt-get install -y gh
-gh auth login
-```
-
-**Linux (Fedora/RHEL):**
-
-```bash
-# Required: Git
-sudo dnf install -y git
-
-# Required: OpenAI API key (for semantic memory)
-export OPENAI_API_KEY=sk-...       # Add to your ~/.bashrc
-
-# Optional: Claude Code (for agent orchestration)
-npm install -g @anthropic-ai/claude-code
-
-# Optional: GitHub CLI (for PR/merge automation)
-sudo dnf install -y gh
-gh auth login
-```
-
-> **Note:** Without the OpenAI API key, Cortex works fully for task management, git automation, and TUI — only semantic memory search requires embeddings.
-
-## Features
-
-### Task Management
-
-Track your work with a full-featured task system inspired by [beads](https://github.com/steveyegge/beads).
-
-```bash
-cx add "Implement user auth" --type feature    # Create task → CX-1
-cx start CX-1                                   # Move to in progress + create branch
-cx done CX-1                                    # Complete + cleanup
-```
-
-Tasks have status (`backlog` → `progress` → `review` → `done`), types, priorities, design docs, acceptance criteria, and dependencies.
-
-### Terminal UI
-
-A beautiful, keyboard-driven interface built with [Bubble Tea](https://github.com/charmbracelet/bubbletea).
+## Visual Dashboard (`cx ui`)
 
 ```
 ┌─ Cortex ──────────────────────────────────────────────────────────────┐
@@ -162,140 +156,48 @@ A beautiful, keyboard-driven interface built with [Bubble Tea](https://github.co
 └───────────────────────────────────────────────────────────────────────┘
 ```
 
-Views: **Kanban Board** · **Task Detail** · **Memory Browser** · **Agent Dashboard** · **Agent Monitor**
+| View | Key | Description |
+|------|-----|-------------|
+| Dashboard | (home) | Overview: stats, recent tasks, shortcuts |
+| Kanban | `k` | Task board with columns |
+| Table | `t` | Sortable task list |
+| Plans | `p` | High-level plans with inline comments |
+| Brainstorm | `b` | Idea sessions with voting |
+| Memory | `m` | Browse semantic memories |
+| Worktrees | `w` | Active git worktrees |
+| Agents | `g` | Agent session monitoring |
 
-### Semantic Memory
+---
 
-Never lose context again. Cortex stores decisions, session diaries, best practices, and learnings with semantic search.
+## Features
 
-```bash
-cx memory diary "Implemented OAuth2 with PKCE flow"     # Save context
-cx memory search "authentication approach"               # Semantic search
-cx memory reflect                                        # Analyze patterns
-cx memory rules                                          # Generate rules from patterns
-```
+- **Task Management** — Epics and tasks with full lifecycle tracking
+- **Brainstorm Mode** — Explore ideas with voting, pros/cons, and decisions before committing
+- **Plans** — High-level planning with markdown editing and inline comments
+- **Semantic Memory** — Capture learnings with hybrid search (FTS5 + HNSW vectors)
+- **Agent Workflow** — 3-agent autonomous workflow (research → implement → verify)
+- **65+ MCP Tools** — Deep Claude Code integration
+- **LSP Integration** — Code analysis with Go, Rust, TypeScript support
+- **Git-Backed Sync** — All data syncs via git for collaboration and backup
 
-**How it works:**
-- Texts are embedded using OpenAI `text-embedding-3-small`
-- Stored locally in SQLite with HNSW vector index (O(log n) search)
-- Hybrid search combines FTS5 keyword matching (40%) + HNSW vector similarity (60%)
-- Everything stays local — your data never leaves your machine
+---
 
-### Agent Orchestration
+## Requirements
 
-Cortex orchestrates multi-agent workflows for coding tasks. Each task goes through three phases:
+- **Claude Code** — the primary interface
+- **OpenAI API key** — for semantic memory (`OPENAI_API_KEY`)
+- **GitHub CLI** (optional) — for PR/merge automation (`gh auth login`)
 
-```
-┌──────────┐     ┌───────────┐     ┌────────┐
-│ Research │ ──▶ │ Implement │ ──▶ │ Verify │ ──▶ done
-└──────────┘     └───────────┘     └────────┘
-     │                │                 │
-     ▼                ▼                 ▼
-  Understand       Write code       Run tests
-  codebase         following        lint, review
-  + plan           the plan         + report
-```
+---
 
-**Parallel execution** with DAG workflows:
+## Tech Stack
 
-```
-research-explore ──┐                              verify-test   ──┐
-research-memory  ──┼──▶ synth ──▶ implement ──▶   verify-lint  ───┼──▶ report
-research-impact  ──┘                              verify-review ──┘
-```
+- **TUI**: [Charm](https://charm.sh/) (Bubble Tea, Lip Gloss, Glamour)
+- **Storage**: SQLite + FTS5 + HNSW (vector search)
+- **Embeddings**: OpenAI `text-embedding-3-small`
+- **Integration**: MCP Server for Claude Code
 
-11 specialized agents, configurable approval rules, real-time TUI monitoring.
-
-### Git Automation
-
-Cortex ties your git workflow directly to tasks:
-
-```bash
-cx start CX-1      # Creates branch feat/cx-1-description
-                    # Creates git worktree in .worktrees/cx-1/
-
-# ... work on the task ...
-
-cx pr CX-1          # Push + create PR + move task to "review"
-cx merge CX-1       # Squash merge + delete branch + move task to "done"
-```
-
-**Git worktrees** let you work on multiple tasks simultaneously, each in its own directory with its own branch.
-
-### Claude Code Integration (MCP)
-
-Cortex exposes **102 tools** via [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) for deep integration with Claude Code:
-
-```bash
-# Register Cortex as an MCP server
-claude mcp add cortex -- cx mcp serve
-```
-
-| Category | Examples | Count |
-|----------|----------|-------|
-| Task Management | `task_create`, `task_list`, `task_update` | 4 |
-| Memory | `memory_save`, `memory_list`, `memory_link` | 3 |
-| Git Automation | `git_branch`, `git_pr`, `git_merge` | 3 |
-| Agent Orchestration | `agent_spawn`, `task_orchestrate`, `agent_report` | 9 |
-| LSP Code Intelligence | `lsp_symbols`, `lsp_definition`, `lsp_references` | 12 |
-| Planning & Brainstorm | `plan_create`, `brainstorm_create`, `brainstorm_to_plan` | 14 |
-| Business Rules | `business_rule_extract`, `rules_extract` | 8 |
-| Database (PostgreSQL) | `db_query`, `db_schema`, `db_sample` | 5 |
-| Epics & Workflows | `epic_orchestrate`, `workflow_status` | 8 |
-| Verification & Learnings | `verify_task`, `learnings_relevant` | 5 |
-| And more... | Phases, DoD, Controller, Thinking tools | 31 |
-
-> **[View full MCP documentation (102 tools) →](docs/mcp.md)**
->
-> **[Getting started with Claude Code + Cortex →](docs/claude-code.md)**
-
-### Learnings System
-
-Cortex learns from your work and improves over time:
-
-```
-Task completed → Verification → Pattern extraction → Stored as learning
-                                                              ↓
-Next similar task ← Agents apply learned patterns ←── Retrieved by relevance
-```
-
-Types: `success_pattern` · `failure_pattern` · `domain_knowledge` · `user_feedback`
-
-## Architecture
-
-```
-Go 1.24+
-├── SQLite + HNSW + FTS5 (local storage + search)
-├── Bubble Tea + Lip Gloss (terminal UI)
-├── MCP Server (Claude Code integration)
-├── OpenAI Embeddings (text-embedding-3-small)
-└── Git Worktrees (parallel task isolation)
-```
-
-Everything runs locally. No cloud services required (except OpenAI for embeddings).
-
-## CLI Reference
-
-```
-cx init                  Initialize Cortex in current directory
-cx status                Project overview
-
-cx add "title"           Create a task
-cx ls                    List tasks
-cx show CX-1             Show task details
-cx start CX-1            Start working (branch + worktree)
-cx done CX-1             Complete task
-
-cx memory search "q"     Semantic memory search
-cx memory diary "..."    Save session context
-cx memory reflect        Analyze patterns
-
-cx agent ps              List running agents
-cx agent logs <id> -f    Follow agent logs
-
-cx ui                    Open terminal UI
-cx mcp serve             Start MCP server
-```
+---
 
 ## License
 
