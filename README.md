@@ -166,6 +166,7 @@ Once set up, just talk to Claude Code naturally:
 | Memory | `m` | Browse semantic memories |
 | Worktrees | `w` | Active git worktrees |
 | Agents | `g` | Agent session monitoring |
+| Settings | `s` | Sound notifications + agent model selection |
 
 ---
 
@@ -176,6 +177,8 @@ Once set up, just talk to Claude Code naturally:
 - **Plans** — High-level planning with markdown editing and inline comments
 - **Semantic Memory** — Capture learnings with hybrid search (FTS5 + HNSW vectors)
 - **Agent Workflow** — 3-agent autonomous workflow (research → implement → verify)
+- **Agent Model Selection** — Choose which Claude model to use per agent (default, research, implement, verify) from the Settings TUI
+- **Sound Notifications** — Warcraft peon voice pack plays on task/agent events, configurable per event type and volume
 - **65+ MCP Tools** — Deep Claude Code integration
 - **LSP Integration** — Code analysis with Go, Rust, TypeScript support
 - **Git-Backed Sync** — All data syncs via git for collaboration and backup

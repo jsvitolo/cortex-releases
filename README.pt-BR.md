@@ -166,6 +166,7 @@ Depois de configurado, é só conversar com o Claude Code normalmente:
 | Memória | `m` | Browser de memórias semânticas |
 | Worktrees | `w` | Git worktrees ativos |
 | Agentes | `g` | Monitoramento de sessões de agentes |
+| Configurações | `s` | Notificações sonoras + seleção de modelo por agente |
 
 ---
 
