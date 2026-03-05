@@ -50,7 +50,7 @@ get_latest_version() {
 }
 
 main() {
-  local platform version version_no_v archive_name url tmp_dir
+  local platform version version_no_v archive_name url
 
   echo "Installing Cortex CLI (cx)..."
   echo ""
@@ -72,6 +72,8 @@ main() {
   echo "  Archive:  ${archive_name}"
   echo ""
 
+  # tmp_dir is intentionally global so the EXIT trap can reference it
+  # after main() returns (local variables go out of scope before trap fires).
   tmp_dir="$(mktemp -d)"
   trap 'rm -rf "$tmp_dir"' EXIT
 
