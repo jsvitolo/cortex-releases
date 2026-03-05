@@ -65,16 +65,22 @@ Baixe o binário mais recente na página de [Releases](https://github.com/jsvito
 
 ## Configuração
 
-### 1. Configure sua chave da OpenAI
-
-O Cortex usa embeddings da OpenAI para busca semântica na memória:
+### 1. Configure sua chave da OpenAI (opcional)
 
 ```bash
 export OPENAI_API_KEY=sk-...
 # Adicione ao ~/.zshrc ou ~/.bashrc para persistir
 ```
 
-> Sem a chave, o Cortex funciona normalmente para gerenciamento de tarefas, automação git e TUI — apenas a busca semântica precisa dela.
+A chave desbloqueia a **memória semântica** — embeddings que permitem buscar memórias por significado, não só por palavras-chave. Sem ela, o Cortex continua totalmente funcional:
+
+| Funcionalidade | Sem chave | Com chave |
+|----------------|-----------|-----------|
+| Tarefas, git, TUI, agentes | ✅ | ✅ |
+| Busca de memória | ✅ por palavras (FTS5) | ✅ semântica (vetores HNSW) |
+| Salvar memória | ✅ | ✅ + indexada automaticamente |
+| `cx kb index --summarize` | ❌ | ✅ |
+| Extração de learnings | ❌ | ✅ |
 
 ### 2. Inicialize no seu projeto
 

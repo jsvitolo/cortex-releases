@@ -65,16 +65,22 @@ Download the latest binary from the [Releases](https://github.com/jsvitolo/corte
 
 ## Setup
 
-### 1. Set your OpenAI API key
-
-Cortex uses OpenAI embeddings for semantic memory search:
+### 1. Set your OpenAI API key (optional)
 
 ```bash
 export OPENAI_API_KEY=sk-...
 # Add to your ~/.zshrc or ~/.bashrc to persist
 ```
 
-> Without the key, Cortex works fully for task management, git automation, and TUI — only semantic memory requires it.
+The key unlocks **semantic memory** — embeddings that let you search memories by meaning, not just keywords. Without it, Cortex is still fully functional:
+
+| Feature | Without key | With key |
+|---------|-------------|----------|
+| Tasks, git, TUI, agents | ✅ | ✅ |
+| Memory search | ✅ keyword (FTS5) | ✅ semantic (HNSW vectors) |
+| Memory save | ✅ | ✅ + auto-indexed |
+| `cx kb index --summarize` | ❌ | ✅ |
+| Learnings extraction | ❌ | ✅ |
 
 ### 2. Initialize in your project
 
