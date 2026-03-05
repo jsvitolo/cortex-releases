@@ -89,12 +89,26 @@ Isso cria o `.cortex/` (dados locais), registra o servidor MCP no Claude Code e 
 
 O plugin adiciona hooks de automação e atalhos de skills (`/implement`, `/brainstorm`, `/merge`, `/pr`) a todas as sessões do Claude Code nesse projeto.
 
-```bash
-# Instalar pelo marketplace do Claude Code
-claude plugin install cortex
+**Dentro de uma sessão do Claude Code**, execute:
 
-# Ou registrar manualmente o servidor MCP
-claude mcp add cortex -- cx mcp serve
+```
+/plugin marketplace add jsvitolo/cortex-plugins
+/plugin install cortex@cortex-plugins
+```
+
+**Alternativa** — edite `~/.claude/settings.json` diretamente (sem precisar de uma sessão Claude Code):
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "cortex-plugins": {
+      "source": { "source": "github", "repo": "jsvitolo/cortex-plugins" }
+    }
+  },
+  "enabledPlugins": {
+    "cortex@cortex-plugins": true
+  }
+}
 ```
 
 > O `cx init` já cuida do registro do MCP. O plugin adiciona a experiência completa de skills e hooks por cima.
@@ -131,6 +145,30 @@ Depois de configurado, é só conversar com o Claude Code normalmente:
 | `/start CX-N` | Cria branch, entra no worktree, move tarefa para progress |
 | `/pr` | Faz push do branch, cria PR, move tarefa para review |
 | `/merge` | Squash merge do PR, deleta branch, move tarefa para done |
+
+### Exemplo: Da ideia ao shipped
+
+Sem saber como abordar algo? Comece pelo `/brainstorm`:
+
+```
+Você:          /brainstorm "Adicionar notificações em tempo real"
+
+Claude Code:   → Cria sessão de brainstorm BS-1
+               → Você adiciona ideias: WebSockets, SSE, polling
+               → Vota na melhor abordagem
+               → Decide: SSE (mais simples, sem deps extras)
+               → /plan → documenta o design
+               → Cria tarefa CX-42
+
+Você:          /implement CX-42
+
+Claude Code:   → agente research: lê o código, consulta memória
+               → agente implement: escreve seguindo o plano
+               → agente verify: roda testes, revisa mudanças
+               → Tarefa vai para review automaticamente
+
+Você:          /pr    →  /merge    →  pronto ✓
+```
 
 ---
 

@@ -89,12 +89,26 @@ This sets up `.cortex/` (local data), registers the MCP server with Claude Code,
 
 The plugin adds workflow automation hooks and skill shortcuts (`/implement`, `/brainstorm`, `/merge`, `/pr`) to every Claude Code session in this project.
 
-```bash
-# Install from the Claude Code marketplace
-claude plugin install cortex
+**Inside a Claude Code session**, run:
 
-# Or manually register the MCP server
-claude mcp add cortex -- cx mcp serve
+```
+/plugin marketplace add jsvitolo/cortex-plugins
+/plugin install cortex@cortex-plugins
+```
+
+**Alternative** — edit `~/.claude/settings.json` directly (no Claude Code session required):
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "cortex-plugins": {
+      "source": { "source": "github", "repo": "jsvitolo/cortex-plugins" }
+    }
+  },
+  "enabledPlugins": {
+    "cortex@cortex-plugins": true
+  }
+}
 ```
 
 > `cx init` already handles MCP registration. The plugin install adds the full skills and hooks experience on top.
@@ -131,6 +145,30 @@ Once set up, just talk to Claude Code naturally:
 | `/start CX-N` | Creates branch, enters worktree, moves task to progress |
 | `/pr` | Pushes branch, creates PR, moves task to review |
 | `/merge` | Squash merges PR, deletes branch, moves task to done |
+
+### Example: From idea to shipped
+
+Not sure how to approach something? Start with `/brainstorm`:
+
+```
+You:           /brainstorm "Add real-time notifications"
+
+Claude Code:   → Creates brainstorm session BS-1
+               → You add ideas: WebSockets, SSE, polling
+               → Vote on the best approach
+               → Decide: SSE (simpler, no extra deps)
+               → /plan → documents the design
+               → Creates task CX-42
+
+You:           /implement CX-42
+
+Claude Code:   → research agent: reads codebase, checks memory
+               → implement agent: writes code following the plan
+               → verify agent: runs tests, reviews changes
+               → Task moves to review automatically
+
+You:           /pr    →  /merge    →  done ✓
+```
 
 ---
 
