@@ -335,12 +335,20 @@ Linguagens suportadas: Go, Rust, TypeScript, Python, Elixir
 
 | Skill | Finalidade |
 |-------|-----------|
-| `/implement CX-N` | Executar workflow de 3 agentes |
-| `/pr` | Criar PR + mover tarefa para review |
-| `/merge` | Fazer merge + mover tarefa para done |
+| `/implement CX-N` | Executar workflow de 3 agentes (pesquisa → implementação → verificação) |
 | `/brainstorm "título"` | Explorar ideias antes de commitar |
 | `/plan "título"` | Documentar abordagem/design |
-| `/session-end` | Salvar contexto antes de encerrar |
+| `/start CX-N` | Criar branch, entrar no worktree, mover para progress |
+| `/pr` | Criar PR + mover tarefa para review |
+| `/merge` | Fazer merge + mover tarefa para done |
+| `/review` | Code review educativo com quiz |
+| `/session-end` | Salvar contexto e aprendizados antes de encerrar |
+| `/onboard` | Analisar projeto, salvar contexto como memórias |
+| `/bootstrap` | Indexar arquivos fonte na Knowledge Base |
+| `/memory-system` | Salvar aprendizados, buscar contexto, gerar regras |
+| `/rules-extract` | Extrair regras de negócio do código-fonte |
+| `/sync` | Sincronizar progresso da tarefa com Issue do GitHub |
+| `/task-workflow` | Gerenciamento completo do ciclo de vida da tarefa |
 ```
 
 </details>
@@ -366,11 +374,19 @@ Depois de configurado, é só conversar com o Claude Code normalmente:
 | Skill | O que faz |
 |-------|-----------|
 | `/implement CX-N` | Executa o workflow de 3 agentes (pesquisa → implementação → verificação) |
-| `/brainstorm "ideia"` | Inicia uma sessão interativa de brainstorm |
-| `/plan "título"` | Cria ou edita um plano de alto nível |
+| `/brainstorm "ideia"` | Inicia uma sessão interativa de brainstorm para explorar ideias antes de commitar |
+| `/plan "título"` | Cria ou edita um plano de alto nível para documentar abordagem e design |
 | `/start CX-N` | Cria branch, entra no worktree, move tarefa para progress |
 | `/pr` | Faz push do branch, cria PR, move tarefa para review |
 | `/merge` | Squash merge do PR, deleta branch, move tarefa para done |
+| `/review` | Code review educativo — explica as mudanças e faz perguntas para garantir entendimento |
+| `/session-end` | Captura aprendizados da sessão como memórias antes de encerrar |
+| `/onboard` | Analisa o projeto e salva contexto abrangente como memórias |
+| `/bootstrap` | Indexa profundamente todos os arquivos fonte na Knowledge Base |
+| `/memory-system` | Salva aprendizados, busca contexto passado, gera regras |
+| `/rules-extract` | Wizard interativo para extrair regras de negócio do código-fonte |
+| `/sync` | Sincroniza progresso da tarefa com a Issue do GitHub vinculada |
+| `/task-workflow` | Gerencia o ciclo de vida completo da tarefa (criar → iniciar → concluir) |
 
 ### Exemplo: Da ideia ao shipped
 
