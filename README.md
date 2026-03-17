@@ -335,20 +335,19 @@ Supported languages: Go, Rust, TypeScript, Python, Elixir
 
 | Skill | Purpose |
 |-------|---------|
-| `/implement CX-N` | Execute 3-agent workflow (research → implement → verify) |
-| `/brainstorm "title"` | Explore ideas before committing |
-| `/plan "title"` | Document approach/design |
-| `/start CX-N` | Create branch, enter worktree, move to progress |
-| `/pr` | Push branch, create PR, move task to review |
-| `/merge` | Squash merge PR, move task to done |
-| `/review` | Educational code review with quiz |
-| `/session-end` | Save context and learnings before ending |
-| `/onboard` | Analyze project, save context as memories |
-| `/bootstrap` | Deep-index source files into Knowledge Base |
-| `/memory-system` | Save learnings, search context, generate rules |
-| `/rules-extract` | Extract business rules from source code |
-| `/sync` | Sync task progress to GitHub Issue |
-| `/task-workflow` | Full task lifecycle management |
+| `/cortex:implement CX-N` | Execute 3-agent workflow (research → implement → verify) |
+| `/cortex:brainstorm "title"` | Explore ideas before committing |
+| `/cortex:plan "title"` | Document approach/design |
+| `/cortex:start CX-N` | Create branch, enter worktree, move to progress |
+| `/cortex:pr` | Push branch, create PR, move task to review |
+| `/cortex:merge` | Squash merge PR, move task to done |
+| `/cortex:review` | Educational code review with quiz |
+| `/cortex:session-end` | Save context and learnings before ending |
+| `/cortex:onboard` | Analyze project, save context as memories |
+| `/cortex:bootstrap` | Deep-index source files into Knowledge Base |
+| `/cortex:memory-system` | Save learnings, search context, generate rules |
+| `/cortex:rules` | Extract business rules from source code |
+| `/cortex:sync` | Sync task progress to GitHub Issue |
 ```
 
 </details>
@@ -371,22 +370,23 @@ Once set up, just talk to Claude Code naturally:
 
 ### Skills (slash commands in Claude Code)
 
+Skills are available as `/cortex:<name>` when installed via the plugin, or `/<name>` when used locally.
+
 | Skill | What it does |
 |-------|--------------|
-| `/implement CX-N` | Runs the 3-agent workflow (research → implement → verify) |
-| `/brainstorm "idea"` | Starts an interactive brainstorm session to explore ideas before committing |
-| `/plan "title"` | Creates or edits a high-level plan to document approach and design |
-| `/start CX-N` | Creates branch, enters worktree, moves task to progress |
-| `/pr` | Pushes branch, creates PR, moves task to review |
-| `/merge` | Squash merges PR, deletes branch, moves task to done |
-| `/review` | Educational code review — explains changes and quizzes for understanding |
-| `/session-end` | Captures session learnings as memories before ending |
-| `/onboard` | Analyzes the project and saves comprehensive context as memories |
-| `/bootstrap` | Deep-indexes all source files into the Knowledge Base |
-| `/memory-system` | Saves learnings, searches past context, generates rules |
-| `/rules-extract` | Interactive wizard to extract business rules from source code |
-| `/sync` | Syncs task progress to linked GitHub Issue |
-| `/task-workflow` | Manages the complete task lifecycle (create → start → done) |
+| `/cortex:implement CX-N` | Runs the 3-agent workflow (research → implement → verify) |
+| `/cortex:brainstorm "idea"` | Starts an interactive brainstorm session to explore ideas before committing |
+| `/cortex:plan "title"` | Creates or edits a high-level plan to document approach and design |
+| `/cortex:start CX-N` | Creates branch, enters worktree, moves task to progress |
+| `/cortex:pr` | Pushes branch, creates PR, moves task to review |
+| `/cortex:merge` | Squash merges PR, deletes branch, moves task to done |
+| `/cortex:review` | Educational code review — explains changes and quizzes for understanding |
+| `/cortex:session-end` | Captures session learnings as memories before ending |
+| `/cortex:onboard` | Analyzes the project and saves comprehensive context as memories |
+| `/cortex:bootstrap` | Deep-indexes all source files into the Knowledge Base |
+| `/cortex:memory-system` | Saves learnings, searches past context, generates rules |
+| `/cortex:rules` | Interactive wizard to extract business rules from source code |
+| `/cortex:sync` | Syncs task progress to linked GitHub Issue |
 
 ### Example: From idea to shipped
 

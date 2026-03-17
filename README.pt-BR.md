@@ -335,20 +335,19 @@ Linguagens suportadas: Go, Rust, TypeScript, Python, Elixir
 
 | Skill | Finalidade |
 |-------|-----------|
-| `/implement CX-N` | Executar workflow de 3 agentes (pesquisa → implementação → verificação) |
-| `/brainstorm "título"` | Explorar ideias antes de commitar |
-| `/plan "título"` | Documentar abordagem/design |
-| `/start CX-N` | Criar branch, entrar no worktree, mover para progress |
-| `/pr` | Criar PR + mover tarefa para review |
-| `/merge` | Fazer merge + mover tarefa para done |
-| `/review` | Code review educativo com quiz |
-| `/session-end` | Salvar contexto e aprendizados antes de encerrar |
-| `/onboard` | Analisar projeto, salvar contexto como memórias |
-| `/bootstrap` | Indexar arquivos fonte na Knowledge Base |
-| `/memory-system` | Salvar aprendizados, buscar contexto, gerar regras |
-| `/rules-extract` | Extrair regras de negócio do código-fonte |
-| `/sync` | Sincronizar progresso da tarefa com Issue do GitHub |
-| `/task-workflow` | Gerenciamento completo do ciclo de vida da tarefa |
+| `/cortex:implement CX-N` | Executar workflow de 3 agentes (pesquisa → implementação → verificação) |
+| `/cortex:brainstorm "título"` | Explorar ideias antes de commitar |
+| `/cortex:plan "título"` | Documentar abordagem/design |
+| `/cortex:start CX-N` | Criar branch, entrar no worktree, mover para progress |
+| `/cortex:pr` | Criar PR + mover tarefa para review |
+| `/cortex:merge` | Fazer merge + mover tarefa para done |
+| `/cortex:review` | Code review educativo com quiz |
+| `/cortex:session-end` | Salvar contexto e aprendizados antes de encerrar |
+| `/cortex:onboard` | Analisar projeto, salvar contexto como memórias |
+| `/cortex:bootstrap` | Indexar arquivos fonte na Knowledge Base |
+| `/cortex:memory-system` | Salvar aprendizados, buscar contexto, gerar regras |
+| `/cortex:rules` | Extrair regras de negócio do código-fonte |
+| `/cortex:sync` | Sincronizar progresso da tarefa com Issue do GitHub |
 ```
 
 </details>
@@ -371,22 +370,23 @@ Depois de configurado, é só conversar com o Claude Code normalmente:
 
 ### Skills (slash commands no Claude Code)
 
+Skills disponíveis como `/cortex:<nome>` quando instaladas via plugin, ou `/<nome>` localmente.
+
 | Skill | O que faz |
 |-------|-----------|
-| `/implement CX-N` | Executa o workflow de 3 agentes (pesquisa → implementação → verificação) |
-| `/brainstorm "ideia"` | Inicia uma sessão interativa de brainstorm para explorar ideias antes de commitar |
-| `/plan "título"` | Cria ou edita um plano de alto nível para documentar abordagem e design |
-| `/start CX-N` | Cria branch, entra no worktree, move tarefa para progress |
-| `/pr` | Faz push do branch, cria PR, move tarefa para review |
-| `/merge` | Squash merge do PR, deleta branch, move tarefa para done |
-| `/review` | Code review educativo — explica as mudanças e faz perguntas para garantir entendimento |
-| `/session-end` | Captura aprendizados da sessão como memórias antes de encerrar |
-| `/onboard` | Analisa o projeto e salva contexto abrangente como memórias |
-| `/bootstrap` | Indexa profundamente todos os arquivos fonte na Knowledge Base |
-| `/memory-system` | Salva aprendizados, busca contexto passado, gera regras |
-| `/rules-extract` | Wizard interativo para extrair regras de negócio do código-fonte |
-| `/sync` | Sincroniza progresso da tarefa com a Issue do GitHub vinculada |
-| `/task-workflow` | Gerencia o ciclo de vida completo da tarefa (criar → iniciar → concluir) |
+| `/cortex:implement CX-N` | Executa o workflow de 3 agentes (pesquisa → implementação → verificação) |
+| `/cortex:brainstorm "ideia"` | Inicia uma sessão interativa de brainstorm para explorar ideias antes de commitar |
+| `/cortex:plan "título"` | Cria ou edita um plano de alto nível para documentar abordagem e design |
+| `/cortex:start CX-N` | Cria branch, entra no worktree, move tarefa para progress |
+| `/cortex:pr` | Faz push do branch, cria PR, move tarefa para review |
+| `/cortex:merge` | Squash merge do PR, deleta branch, move tarefa para done |
+| `/cortex:review` | Code review educativo — explica as mudanças e faz perguntas para garantir entendimento |
+| `/cortex:session-end` | Captura aprendizados da sessão como memórias antes de encerrar |
+| `/cortex:onboard` | Analisa o projeto e salva contexto abrangente como memórias |
+| `/cortex:bootstrap` | Indexa profundamente todos os arquivos fonte na Knowledge Base |
+| `/cortex:memory-system` | Salva aprendizados, busca contexto passado, gera regras |
+| `/cortex:rules` | Wizard interativo para extrair regras de negócio do código-fonte |
+| `/cortex:sync` | Sincroniza progresso da tarefa com a Issue do GitHub vinculada |
 
 ### Exemplo: Da ideia ao shipped
 
