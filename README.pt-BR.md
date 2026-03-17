@@ -129,6 +129,226 @@ Agora abra o Claude Code no seu projeto e comece a trabalhar — o Cortex rastre
 
 ---
 
+## Integração com CLAUDE.md
+
+Ao rodar `cx init`, o Cortex adiciona automaticamente a seguinte seção de regras no `CLAUDE.md` do seu projeto. É isso que faz o Claude Code usar as ferramentas do Cortex de forma correta e consistente.
+
+Você também pode adicionar manualmente copiando o bloco abaixo:
+
+<details>
+<summary><strong>Ver seção de regras do CLAUDE.md</strong></summary>
+
+```markdown
+---
+
+## ⚠️ REGRAS OBRIGATÓRIAS - Cortex (DEVE SEGUIR)
+
+Estas regras são **absolutas** e devem ser seguidas em TODAS as interações.
+
+---
+
+### 0. 🔴 PRIORIDADE MÁXIMA: SEMPRE usar as ferramentas MCP do Cortex
+
+**Esta é a regra mais importante.** SEMPRE prefira `mcp__cortex__*` ao invés de CLI ou Bash:
+
+| Operação | Ferramenta MCP ✅ | Não usar ❌ |
+|----------|-----------------|------------|
+| Criar tarefa | `mcp__cortex__task(action="create")` | ~~cx add~~ |
+| Ver tarefa | `mcp__cortex__task(action="get")` | ~~cx show~~ |
+| Listar tarefas | `mcp__cortex__task(action="list")` | ~~cx ls~~ |
+| Atualizar tarefa | `mcp__cortex__task(action="update")` | ~~cx mv~~ |
+| Status do projeto | `mcp__cortex__status()` | ~~cx status~~ |
+| Salvar memória | `mcp__cortex__memory(action="save")` | ~~cx memory diary~~ |
+| Buscar memória | `mcp__cortex__memory(action="list")` | ~~cx memory search~~ |
+| Criar branch | `mcp__cortex__git(action="branch")` | ~~git checkout -b~~ |
+| Criar PR | `mcp__cortex__git(action="pr")` | ~~gh pr create~~ |
+| Fazer merge | `mcp__cortex__git(action="merge")` | ~~gh pr merge~~ |
+| Símbolos no código | `mcp__cortex__lsp(action="symbols")` | ~~Glob/Grep~~ |
+| Ir para definição | `mcp__cortex__lsp(action="definition")` | ~~Grep~~ |
+| Encontrar referências | `mcp__cortex__lsp(action="references")` | ~~Grep~~ |
+| Planos | `mcp__cortex__highlevel_plan()` | ~~nada~~ |
+| Brainstorm | `mcp__cortex__brainstorm()` | ~~nada~~ |
+
+**Exceções legítimas (use as ferramentas nativas do Claude Code):**
+- `Read` → ler conteúdo de arquivos
+- `Edit`/`Write` → editar/criar arquivos
+- `Glob` → busca de arquivos por padrão
+- `Bash` → comandos do sistema (make, go install, etc.)
+
+---
+
+### 1. 🚀 No Início de QUALQUER Sessão de Trabalho
+
+**OBRIGATÓRIO** — verifique o estado atual antes de qualquer coisa:
+
+```
+# 1. Visão geral do projeto
+mcp__cortex__status()
+
+# 2. Planos rascunho aguardando aprovação?
+mcp__cortex__highlevel_plan(action="list")
+
+# 3. Tarefas travadas em progresso (sem atividade)?
+mcp__cortex__task(action="list", status="progress")
+
+# 4. Tarefas em revisão aguardando merge?
+mcp__cortex__task(action="list", status="review")
+```
+
+Se houver planos **rascunho** → pergunte ao usuário se quer revisá-los antes de criar novas tarefas.
+Se houver tarefas **em progresso** → pergunte se quer continuar ou se foram abandonadas.
+Se houver tarefas **em revisão** → pergunte se quer fazer merge antes de começar novo trabalho.
+
+---
+
+### 2. 📋 Gerenciamento de Tarefas — SEMPRE via MCP
+
+```
+# CRIAR tarefa antes de qualquer trabalho
+mcp__cortex__task(action="create", title="Título", type="feature|bug|chore")
+
+# INICIAR tarefa antes de implementar
+mcp__cortex__task(action="update", id="CX-N", status="progress")
+
+# FINALIZAR tarefa quando concluída
+mcp__cortex__task(action="update", id="CX-N", status="done")
+```
+
+**NUNCA** trabalhe sem uma tarefa Cortex associada.
+
+---
+
+### 3. 🧠 Workflow de Desenvolvimento — Escolha o modo certo
+
+Antes de implementar, avalie e escolha:
+
+```
+A solução está clara?
+├── Não → /brainstorm "título"   (explore ideias, vote, decida)
+│              ↓
+│         /plan "título"          (documente o design)
+│              ↓
+│         crie tarefa + /implement
+│
+└── Sim → É complexo?
+          ├── Sim → /plan "título"  (documente a abordagem)
+          │              ↓
+          │         crie tarefa + /implement
+          │
+          └── Não → crie tarefa + /implement  (direto)
+```
+
+#### Quando usar `/brainstorm`:
+- Nova feature **sem design claro**
+- **Múltiplas abordagens** possíveis
+- Precisa **explorar trade-offs** antes de decidir
+
+#### Quando usar `/plan`:
+- Design **já definido**, precisa de documentação
+- **Feature complexa** que precisa de spec antes do código
+
+#### Quando ir direto para tarefa + `/implement`:
+- Bug fix com **causa conhecida**
+- **Feature pequena** com escopo claro
+- Seguindo um **plano já aprovado**
+
+---
+
+### 4. 🤖 Workflow de Agentes — USE `/implement` para código
+
+**REGRA:** Para QUALQUER implementação de código, use o skill `/implement`:
+
+```bash
+/implement CX-N              # Executa workflow para tarefa existente
+/implement "Adicionar feature" # Cria tarefa e executa workflow
+```
+
+O workflow de 3 agentes (research → implement → verify) é **OBRIGATÓRIO** para:
+- Novas features / bug fixes / refatorações / adição de testes
+
+**NÃO USE** para: pequenas correções, atualizações de docs, perguntas sobre código.
+
+---
+
+### 5. 🔀 Workflow Git — SEMPRE via MCP
+
+```
+# Criar branch para a tarefa
+mcp__cortex__git(action="branch", task_id="CX-N")
+
+# Push + criar PR + mover tarefa para review
+mcp__cortex__git(action="pr")
+# ou: /pr
+
+# Squash merge + deletar branch + mover tarefa para done
+mcp__cortex__git(action="merge")
+# ou: /merge
+```
+
+Conventional Commits — formato obrigatório:
+`feat(scope): descrição (CX-N)` | `fix` | `chore` | `refactor` | `docs`
+
+---
+
+### 6. 💾 Memória — Busque ANTES de perguntar
+
+```
+# SEMPRE busque contexto antes de fazer perguntas ao usuário
+mcp__cortex__memory(action="list", search="termo relevante")
+
+# Ao final de uma sessão significativa
+mcp__cortex__memory(action="save", type="diary", title="Sessão ...", content="...")
+```
+
+---
+
+### 7. 🔍 LSP — Análise de código via Cortex MCP
+
+```
+mcp__cortex__lsp(action="symbols", file="caminho/para/arquivo.go")
+mcp__cortex__lsp(action="definition", file="...", line=10, column=5)
+mcp__cortex__lsp(action="references", file="...", line=10, column=5)
+mcp__cortex__lsp(action="hover", file="...", line=10, column=5)
+```
+
+Linguagens suportadas: Go, Rust, TypeScript, Python, Elixir
+
+---
+
+## Referência Rápida do Cortex
+
+### Ferramentas MCP
+
+| Ferramenta | Ação |
+|-----------|------|
+| `mcp__cortex__status()` | Visão geral do projeto |
+| `mcp__cortex__task(action="create", title="...")` | Criar tarefa |
+| `mcp__cortex__task(action="list")` | Listar tarefas |
+| `mcp__cortex__task(action="update", id="CX-N", status="progress")` | Atualizar status |
+| `mcp__cortex__memory(action="list", search="q")` | Buscar memórias |
+| `mcp__cortex__memory(action="save", type="diary", ...)` | Salvar memória |
+| `mcp__cortex__git(action="pr")` | Criar PR |
+| `mcp__cortex__git(action="merge")` | Fazer merge do PR |
+| `mcp__cortex__highlevel_plan(action="list")` | Listar planos |
+
+### Skills (Claude Code)
+
+| Skill | Finalidade |
+|-------|-----------|
+| `/implement CX-N` | Executar workflow de 3 agentes |
+| `/pr` | Criar PR + mover tarefa para review |
+| `/merge` | Fazer merge + mover tarefa para done |
+| `/brainstorm "título"` | Explorar ideias antes de commitar |
+| `/plan "título"` | Documentar abordagem/design |
+| `/session-end` | Salvar contexto antes de encerrar |
+```
+
+</details>
+
+> `cx init` adiciona isso automaticamente. Só copie manualmente se estiver adicionando o Cortex a um projeto já inicializado.
+
+---
+
 ## O que o Claude Code faz com o Cortex
 
 Depois de configurado, é só conversar com o Claude Code normalmente:
