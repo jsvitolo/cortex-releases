@@ -26,10 +26,10 @@
 
 O Cortex foi feito para funcionar **junto com o Claude Code**, não como uma CLI que você fica digitando comandos.
 
-Depois de inicializado, **o Claude Code vira sua interface** — ele usa as 65+ ferramentas MCP do Cortex para gerenciar tarefas, buscar memórias, executar workflows de agentes e navegar pelo código. Você raramente precisa digitar comandos `cx` diretamente.
+Depois de inicializado, **o Claude Code vira sua interface** — ele usa as 80+ ferramentas MCP do Cortex para gerenciar tarefas, buscar memórias, analisar estrutura de código, executar workflows de agentes e navegar pelo código. Você raramente precisa digitar comandos `cx` diretamente.
 
 ```
-Você → Claude Code → Cortex MCP → Tarefas, Memória, Agentes, LSP
+Você → Claude Code → Cortex MCP → Tarefas, Memória, Code Graph, Agentes, LSP
                               ↓
                            cx ui  (para visualizar tudo)
 ```
@@ -168,6 +168,10 @@ Estas regras são **absolutas** e devem ser seguidas em TODAS as interações.
 | Encontrar referências | `mcp__cortex__lsp(action="references")` | ~~Grep~~ |
 | Planos | `mcp__cortex__highlevel_plan()` | ~~nada~~ |
 | Brainstorm | `mcp__cortex__brainstorm()` | ~~nada~~ |
+| Contexto do grafo | `mcp__cortex__codegraph(action="context")` | ~~nada~~ |
+| Construir grafo | `mcp__cortex__codegraph(action="build")` | ~~nada~~ |
+| Análise de impacto | `mcp__cortex__codegraph(action="impact")` | ~~nada~~ |
+| Hints de review | `mcp__cortex__codegraph(action="review_hints")` | ~~nada~~ |
 
 **Exceções legítimas (use as ferramentas nativas do Claude Code):**
 - `Read` → ler conteúdo de arquivos
@@ -315,6 +319,32 @@ Linguagens suportadas: Go, Rust, TypeScript, Python, Elixir
 
 ---
 
+### 8. 📊 Code Graph — Análise estrutural de código
+
+Se o projeto tem um grafo de código construído (`codegraph:status` mostra nodes > 0), use-o:
+
+```
+# Primeira chamada — overview ultra-compacto (~100 tokens)
+mcp__cortex__codegraph(action="context", task="o que está fazendo")
+
+# Buscar símbolos
+mcp__cortex__codegraph(action="query", name="NomeFuncao")
+
+# Impacto antes de mudar código
+mcp__cortex__codegraph(action="impact", node_id="cn-xxx")
+
+# Hints de review antes do PR
+mcp__cortex__codegraph(action="review_hints", since="HEAD")
+
+# Construir/atualizar o grafo
+mcp__cortex__codegraph(action="build")     # build completo (primeira vez)
+mcp__cortex__codegraph(action="update")    # incremental (após mudanças)
+```
+
+Linguagens suportadas: Go, Elixir, TypeScript, Rust, Python
+
+---
+
 ## Referência Rápida do Cortex
 
 ### Ferramentas MCP
@@ -330,6 +360,10 @@ Linguagens suportadas: Go, Rust, TypeScript, Python, Elixir
 | `mcp__cortex__git(action="pr")` | Criar PR |
 | `mcp__cortex__git(action="merge")` | Fazer merge do PR |
 | `mcp__cortex__highlevel_plan(action="list")` | Listar planos |
+| `mcp__cortex__codegraph(action="context", task="...")` | Contexto do grafo de código |
+| `mcp__cortex__codegraph(action="build")` | Construir grafo de código |
+| `mcp__cortex__codegraph(action="impact", node_id="...")` | Análise de impacto |
+| `mcp__cortex__codegraph(action="review_hints")` | Hints de code review |
 
 ### Skills (Claude Code)
 
@@ -367,6 +401,8 @@ Depois de configurado, é só conversar com o Claude Code normalmente:
 | "O que decidimos sobre o schema do banco?" | Busca na memória semântica |
 | "Abre um PR pra isso" | Faz push, cria PR, move tarefa para review |
 | "Faz o merge e a release" | Squash merge, cria tag, dispara release no CI |
+| "Qual o impacto de mudar essa função?" | Executa análise de impacto no codegraph |
+| "Me mostra a arquitetura do projeto" | Gera overview das comunidades |
 
 ### Skills (slash commands no Claude Code)
 
@@ -457,8 +493,9 @@ Você:          /pr    →  /merge    →  pronto ✓
 - **Planos** — Planejamento de alto nível com markdown e comentários inline
 - **Memória Semântica** — Capture aprendizados com busca híbrida (FTS5 + vetores HNSW)
 - **Workflow de Agentes** — Workflow autônomo de 3 agentes (pesquisa → implementação → verificação)
-- **65+ Ferramentas MCP** — Integração profunda com Claude Code
-- **Integração LSP** — Análise de código com suporte a Go, Rust, TypeScript
+- **Análise de Código (Code Graph)** — Grafo de código multi-linguagem via Tree-sitter (Go, Elixir, TypeScript, Rust, Python) com análise de impacto, detecção de dead code, detecção de comunidades, hints de review, visualização D3.js e geração de wiki
+- **80+ Ferramentas MCP** — Integração profunda com Claude Code
+- **Integração LSP** — Análise de código com suporte a Go, Rust, TypeScript, Python, Elixir
 - **Sync via Git** — Todos os dados sincronizam via git para colaboração e backup
 
 ---
@@ -476,6 +513,7 @@ Você:          /pr    →  /merge    →  pronto ✓
 - **TUI**: [Charm](https://charm.sh/) (Bubble Tea, Lip Gloss, Glamour)
 - **Armazenamento**: SQLite + FTS5 + HNSW (busca vetorial)
 - **Embeddings**: OpenAI `text-embedding-3-small`
+- **Grafo de Código**: [gotreesitter](https://github.com/odvcencio/gotreesitter) (Tree-sitter puro Go, 5 linguagens)
 - **Integração**: Servidor MCP para Claude Code
 
 ---

@@ -26,10 +26,10 @@
 
 Cortex is designed to work **alongside Claude Code**, not as a standalone CLI you type into.
 
-Once initialized, **Claude Code becomes your interface** — it uses Cortex's 65+ MCP tools to manage tasks, search memory, run agent workflows, and navigate code. You rarely need to type `cx` commands yourself.
+Once initialized, **Claude Code becomes your interface** — it uses Cortex's 80+ MCP tools to manage tasks, search memory, analyze code structure, run agent workflows, and navigate code. You rarely need to type `cx` commands yourself.
 
 ```
-You → Claude Code → Cortex MCP → Tasks, Memory, Agents, LSP
+You → Claude Code → Cortex MCP → Tasks, Memory, Code Graph, Agents, LSP
                               ↓
                            cx ui  (to visualize everything)
 ```
@@ -168,6 +168,10 @@ These rules are **absolute** and must be followed in ALL interactions.
 | Find references | `mcp__cortex__lsp(action="references")` | ~~Grep~~ |
 | Plans | `mcp__cortex__highlevel_plan()` | ~~nothing~~ |
 | Brainstorm | `mcp__cortex__brainstorm()` | ~~nothing~~ |
+| Code graph context | `mcp__cortex__codegraph(action="context")` | ~~nothing~~ |
+| Build code graph | `mcp__cortex__codegraph(action="build")` | ~~nothing~~ |
+| Impact analysis | `mcp__cortex__codegraph(action="impact")` | ~~nothing~~ |
+| Review hints | `mcp__cortex__codegraph(action="review_hints")` | ~~nothing~~ |
 
 **Legitimate exceptions (use native Claude Code tools):**
 - `Read` → read file contents
@@ -315,6 +319,32 @@ Supported languages: Go, Rust, TypeScript, Python, Elixir
 
 ---
 
+### 8. 📊 Code Graph — Structural code analysis
+
+If the project has a built code graph (`codegraph:status` shows nodes > 0), use it:
+
+```
+# First call — ultra-compact overview (~100 tokens)
+mcp__cortex__codegraph(action="context", task="what you are doing")
+
+# Query symbols
+mcp__cortex__codegraph(action="query", name="FuncName")
+
+# Impact before changing code
+mcp__cortex__codegraph(action="impact", node_id="cn-xxx")
+
+# Review hints before PR
+mcp__cortex__codegraph(action="review_hints", since="HEAD")
+
+# Build/update the graph
+mcp__cortex__codegraph(action="build")     # full build (first time)
+mcp__cortex__codegraph(action="update")    # incremental (after changes)
+```
+
+Supported languages: Go, Elixir, TypeScript, Rust, Python
+
+---
+
 ## Cortex Quick Reference
 
 ### MCP Tools
@@ -330,6 +360,10 @@ Supported languages: Go, Rust, TypeScript, Python, Elixir
 | `mcp__cortex__git(action="pr")` | Create PR |
 | `mcp__cortex__git(action="merge")` | Merge PR |
 | `mcp__cortex__highlevel_plan(action="list")` | List plans |
+| `mcp__cortex__codegraph(action="context", task="...")` | Code graph context overview |
+| `mcp__cortex__codegraph(action="build")` | Build code graph |
+| `mcp__cortex__codegraph(action="impact", node_id="...")` | Impact analysis |
+| `mcp__cortex__codegraph(action="review_hints")` | Code review hints |
 
 ### Skills (Claude Code)
 
@@ -367,6 +401,8 @@ Once set up, just talk to Claude Code naturally:
 | "What did we decide about the DB schema?" | Searches semantic memory |
 | "Open a PR for this" | Pushes, creates PR, moves task to review |
 | "Merge and release" | Squash merges, tags, triggers CI release |
+| "What's the impact of changing this function?" | Runs codegraph impact analysis |
+| "Show me the project architecture" | Generates community overview |
 
 ### Skills (slash commands in Claude Code)
 
@@ -457,10 +493,11 @@ You:           /pr    →  /merge    →  done ✓
 - **Plans** — High-level planning with markdown editing and inline comments
 - **Semantic Memory** — Capture learnings with hybrid search (FTS5 + HNSW vectors)
 - **Agent Workflow** — 3-agent autonomous workflow (research → implement → verify)
+- **Code Graph Analysis** — Tree-sitter powered multi-language code graph (Go, Elixir, TypeScript, Rust, Python) with impact analysis, dead code detection, community detection, review hints, D3.js visualization, and wiki generation
 - **Agent Model Selection** — Choose which Claude model to use per agent (default, research, implement, verify) from the Settings TUI
 - **Sound Notifications** — Warcraft peon voice pack plays on task/agent events, configurable per event type and volume
-- **65+ MCP Tools** — Deep Claude Code integration
-- **LSP Integration** — Code analysis with Go, Rust, TypeScript support
+- **80+ MCP Tools** — Deep Claude Code integration
+- **LSP Integration** — Code analysis with Go, Rust, TypeScript, Python, Elixir support
 - **Git-Backed Sync** — All data syncs via git for collaboration and backup
 
 ---
@@ -478,6 +515,7 @@ You:           /pr    →  /merge    →  done ✓
 - **TUI**: [Charm](https://charm.sh/) (Bubble Tea, Lip Gloss, Glamour)
 - **Storage**: SQLite + FTS5 + HNSW (vector search)
 - **Embeddings**: OpenAI `text-embedding-3-small`
+- **Code Graph**: [gotreesitter](https://github.com/odvcencio/gotreesitter) (pure Go Tree-sitter, 5 languages)
 - **Integration**: MCP Server for Claude Code
 
 ---
